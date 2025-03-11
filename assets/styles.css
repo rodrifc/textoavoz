@@ -230,3 +230,9 @@ rowspace {
     color: inherit;
     text-decoration: none;
 }
+
+.responsive-banner {
+  width: 100%;
+  height: auto;
+  display: block; /* Prevents inline-block spacing issues */
+}
