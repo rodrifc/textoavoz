@@ -286,16 +286,41 @@ function get_audio() {
 }
 
 async function saveFiles(fix_filename, blob, from_ind, to_ind) {
-	const new_folder_handle = await save_path_handle.getDirectoryHandle(parts_book[from_ind].my_filename, { create: true });
-	const fileHandle = await new_folder_handle.getFileHandle(fix_filename, { create: true });
-	const writableStream = await fileHandle.createWritable();
-	const writable = writableStream.getWriter();
-	await writable.write(blob);
-	await writable.close();
-	
-	for (let ind_mp3 = from_ind; ind_mp3 <= to_ind; ind_mp3++) {
-		parts_book[ind_mp3].clear()
-	}
+    try {
+        // Ensure save_path_handle is defined and valid
+        if (!save_path_handle) {
+            throw new Error("save_path_handle is not defined. Please select a directory first.");
+        }
+
+        // Create a new folder inside the selected directory
+        const folderName = parts_book[from_ind]?.my_filename;
+        if (!folderName) {
+            throw new Error(`Invalid folder name: parts_book[${from_ind}] is undefined or missing my_filename.`);
+        }
+
+        const new_folder_handle = await save_path_handle.getDirectoryHandle(folderName, { create: true });
+
+        // Create a new file inside the folder
+        const fileHandle = await new_folder_handle.getFileHandle(fix_filename, { create: true });
+
+        // Write the blob data to the file
+        const writableStream = await fileHandle.createWritable();
+        await writableStream.write(blob);
+        await writableStream.close();
+
+        console.log(`File "${fix_filename}" saved successfully in folder "${folderName}".`);
+
+        // Clear the relevant entries in parts_book
+        for (let ind_mp3 = from_ind; ind_mp3 <= to_ind; ind_mp3++) {
+            if (parts_book[ind_mp3] && typeof parts_book[ind_mp3].clear === "function") {
+                parts_book[ind_mp3].clear();
+            } else {
+                console.warn(`parts_book[${ind_mp3}] is invalid or does not have a clear() method.`);
+            }
+        }
+    } catch (error) {
+        console.error("Error saving files:", error);
+    }
 }
 
 function save_merge(num_mp3, from_ind, to_ind, mp3_length) {

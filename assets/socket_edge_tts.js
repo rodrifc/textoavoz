@@ -86,16 +86,16 @@
 			if (data.includes("Path:turn.end")) {
 				this.end_message_received = true
 				//console.log("Path:turn.end ", this.indexpart)
-				//Обработка частей Blob с последующим сохранением в mp3
+				//Procesando partes de Blob y luego guardándolo en mp3
 				for (let _ind = 0; _ind < this.audios.length; _ind++) {
 					const reader_result = await this.audios[_ind].arrayBuffer()
 					const uint8_Array = await new Uint8Array(reader_result)
 					
-					// Ищем все позиции байтов, равных "\r\n"
+					// Buscar todas las posiciones de bytes iguales a "\r\n""
 					let posIndex = this.findIndex(uint8_Array, this.data_separator)
 					const parts = []
 					if (posIndex !== -1) {
-						// Разрезаем Blob на части
+						// Cortar el Blob en pedazos
 						const partBlob = this.audios[_ind].slice(posIndex + this.data_separator.length)
 						parts.push(partBlob)
 
@@ -129,7 +129,7 @@
 	onSocketClose() {
 		if ( !this.mp3_saved ) {
 			if ( this.end_message_received == true ) {
-				this.update_stat("         a mi líder")
+				this.update_stat(" a mi líder")
 			} else {
 				this.update_stat("a los invitados - ferozmente")
 				let self = this
@@ -179,18 +179,33 @@
 		return uuid.replace(/-/g, '');
 	}
 	
-	async saveFiles(blob) {
-		if (this.start_save == false) {
-			this.start_save = true
-			const new_folder_handle = await save_path_handle.getDirectoryHandle(this.my_filename, { create: true });			
-			const fileHandle = await new_folder_handle.getFileHandle(this.my_filename + " " + this.my_filenum + '.mp3', { create: true });
-			const writableStream = await fileHandle.createWritable();
-			const writable = writableStream.getWriter();
-			await writable.write(blob);
-			await writable.close();
-			this.clear()
-		}
-	}
+async saveFiles(blob) {
+    if (this.start_save == false) {
+        this.start_save = true;
+
+        try {
+            // Prompt the user to select a directory
+            const directoryHandle = await window.showDirectoryPicker();
+
+            // Create a new folder inside the selected directory
+            const new_folder_handle = await directoryHandle.getDirectoryHandle(this.my_filename, { create: true });
+
+            // Create a new file inside the folder
+            const fileHandle = await new_folder_handle.getFileHandle(this.my_filename + " " + this.my_filenum + '.mp3', { create: true });
+
+            // Write the blob data to the file
+            const writableStream = await fileHandle.createWritable();
+            await writableStream.write(blob);
+            await writableStream.close();
+
+            console.log("File saved successfully!");
+        } catch (error) {
+            console.error("Error saving file:", error);
+        }
+
+        this.clear();
+    }
+}
 	
 	save_mp3() {
 		//console.log("Save_mp3");
@@ -212,7 +227,7 @@
 					this.clear()
 				}
 			}
-			this.update_stat("mucho")
+			this.update_stat("dejé de ladrar")
 			this.obj_threads_info.count += 1
 			const stat_count = this.obj_threads_info.stat.textContent.split(' / ');
 			this.obj_threads_info.stat.textContent = String(Number(stat_count[0]) + 1) + " / " + stat_count[1]
