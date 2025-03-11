@@ -210,7 +210,7 @@ function get_text(_filename, _text, is_file) {
 		if ( is_file == true && textArea.style.display != 'none') {
 			textArea.value += "Ladrando " + tmp_ind + ":\n" + part + "\n\n"
 		}
-		statArea.value += "Ladrando " + (tmp_ind).toString().padStart(4, '0') + ": Открыта\n"
+		statArea.value += "Ladrando " + (tmp_ind).toString().padStart(4, '0') + ": como un perro loco\n"
 	}
 	stat_info.textContent = ""//"Открыто"
 	stat_str.textContent = `0 / ${book.all_sentences.length}`
