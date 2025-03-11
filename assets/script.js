@@ -174,7 +174,7 @@ function lite_mod() {
 			let tmp_ind = 0
 			for (let part of book.all_sentences) {
 				tmp_ind += 1
-				textArea.value += "Часть " + tmp_ind + ":\n" + part + "\n\n"
+				textArea.value += "Parte " + tmp_ind + ":\n" + part + "\n\n"
 			}
 		}
 		
@@ -208,9 +208,9 @@ function get_text(_filename, _text, is_file) {
 	for (let part of book.all_sentences) {
 		tmp_ind += 1
 		if ( is_file == true && textArea.style.display != 'none') {
-			textArea.value += "Часть " + tmp_ind + ":\n" + part + "\n\n"
+			textArea.value += "Parte " + tmp_ind + ":\n" + part + "\n\n"
 		}
-		statArea.value += "Часть " + (tmp_ind).toString().padStart(4, '0') + ": Открыта\n"
+		statArea.value += "Parte " + (tmp_ind).toString().padStart(4, '0') + ": Открыта\n"
 	}
 	stat_info.textContent = ""//"Открыто"
 	stat_str.textContent = `0 / ${book.all_sentences.length}`
