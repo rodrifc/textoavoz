@@ -95,9 +95,9 @@ fileInputLex.addEventListener('change', (event) => {
 			lexx = reader.result.split("\n")
 		}
 		reader.readAsText(file)
-		fileButtonLex.textContent = "Загружен"
+		fileButtonLex.textContent = "Subido OK"
 	} else {
-		fileButtonLex.textContent = "Загрузить"
+		fileButtonLex.textContent = "Subido OK"
 	}
 })
 
@@ -112,8 +112,8 @@ fileInput.addEventListener('change', (event) => {
 	}
 	
 	if (event.target.files.length == 0) {
-		fileButton.textContent = "Открыть"
-		stat_info.textContent = ""//"Открыто"
+		fileButton.textContent = "Abierto"
+		stat_info.textContent = "Abierto"
 	}
 	
 	for (let file of event.target.files) {
@@ -138,12 +138,12 @@ fileInput.addEventListener('change', (event) => {
 				} else if ( file_name_toLowerCase.endsWith('.zip') ) {
 					convertZipToTxt(file)
 				}
-				fileButton.textContent = "Открыты"
+				fileButton.textContent = "Subido OK"
 			}
 			
 			reader.readAsText(file)
 		} else {
-			fileButton.textContent = "Открыть"
+			fileButton.textContent = "Subido OK"
 		}
 	}
 
@@ -273,7 +273,7 @@ function add_edge_tts(merge) {
 function get_audio() {
 	clear_old_run()
 	run_work = true
-	stat_info.textContent = "Обработано"
+	stat_info.textContent = "Procesado"
 	const stat_count = stat_str.textContent.split(' / ');
 	stat_str.textContent = "0 / " + stat_count[1]
 	const merge = (mergefiles.value == 1) ? false : true;
