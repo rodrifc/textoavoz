@@ -122,7 +122,7 @@
 	
 	update_stat(msg) {
 		let statlines = this.statArea.value.split('\n');
-		statlines[this.indexpart]= "Parte " + (this.indexpart+1).toString().padStart(4, '0') + ": " + msg
+		statlines[this.indexpart]= "Ladrando " + (this.indexpart+1).toString().padStart(4, '0') + ": " + msg
 		this.statArea.value = statlines.join('\n')
 	}
 
