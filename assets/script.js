@@ -121,7 +121,7 @@ fileInput.addEventListener('change', (event) => {
 		stat_str.textContent = "0 / 0"
 		
 		if (file) {
-			fileButton.textContent = "Обработка..."
+			fileButton.textContent = "Tratamiento..."
 			const reader = new FileReader()
 			reader.onload = () => {
 				book_loaded = true
@@ -212,7 +212,7 @@ function get_text(_filename, _text, is_file) {
 		}
 		statArea.value += "Ladrando " + (tmp_ind).toString().padStart(4, '0') + ": como un perro loco\n"
 	}
-	stat_info.textContent = ""//"Открыто"
+	stat_info.textContent = ""//"ladrando"
 	stat_str.textContent = `0 / ${book.all_sentences.length}`
 	
 	//Очистка ранее запущенной обработки
