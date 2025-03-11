@@ -323,47 +323,47 @@
     </rowspace>
     <rowspace>
 		<select class="pointsselect" id="pointsselect" name="pointsselect">
-			<option>Don't replace periods</option>
-			<option>Replace periods with ,</option>
-			<option>Replace periods with ;</option>
-			<option>Replace periods with :</option>
-			<option>Replace periods with -</option>
-			<option>Replace with three lines</option>
+			<option>No reemplazar puntos</option>
+			<option>Reemplazar puntos por ,</option>
+			<option>Reemplazar puntos por ;</option>
+			<option>Reemplazar puntos por :</option>
+			<option>Reemplazar puntos por -</option>
+			<option>Reemplazar con tres líneas</option>
 		</select>
 		<button class="pointstype" id="pointstype" onclick="points_mod()">V1</button>
     </rowspace>
 
     <div id="div-rate" class="slidecontainer">
 	  <br>
-      <label for="rate">Speed <output style="float: right;" id="rate-str">+100%</output></label>
-      <input type="range" min="-50" max="100" value="25" step="5" class="rate" id="rate" list="ratemarks">
+      <label for="rate">Velocidad <output style="float: right;" id="rate-str">+100%</output></label>
+      <input type="range" min="-50" max="100" value="25" step="0" class="rate" id="rate" list="ratemarks">
     </div>
     <div id="div-pitch" class="slidecontainer">
 	  <br>
-      <label for="pitch">Pitch <output style="float: right;" id="pitch-str">+0Hz</output></label>
+      <label for="pitch">Tono <output style="float: right;" id="pitch-str">+0Hz</output></label>
       <input type="range" min="-50" max="50" value="0" step="0" class="pitch" id="pitch">
     </div>
     <div id="div-threads" class="slidecontainer">
 	  <br>
-      <label for="max-threads">Number of threads <output style="float: right;" id="max-threads-int">20</output></label>
+      <label for="max-threads">Número de hilos<output style="float: right;" id="max-threads-int">20</output></label>
       <input type="range" min=1 max=30 value=20 step=1 class="max-threads" id="max-threads">
     </div>
     <div id="div-mergefiles" class="slidecontainer">
 	  <br>
-      <label for="max-threads">Merge MP3s by <output style="float: right;" id="mergefiles-str">10 pcs.</output></label>
+      <label for="max-threads">Combinar MP3s cada <output style="float: right;" id="mergefiles-str">10 piezas</output></label>
       <input type="range" min=1 max=100 value=10 step=1 class="mergefiles" id="mergefiles">
     </div>
 	<label id="dop-settings-label">﹀</label>
 	<br>
     <myspace class="myspace">
-		<label id="left-label"><a href="./RU.lexx" id="is-lexx">Dictionary</a></label>
-		<label id="right-label">Books</label>
-		<button id="file-button-lex">Upload</button>
-		<button id="file-button">Open</button>
+		<label id="left-label"><a href="./RU.lexx" id="is-lexx">Diccionario</a></label>
+		<label id="right-label">Libros</label>
+		<button id="file-button-lex">Subir</button>
+		<button id="file-button">Abrir</button>
 	</myspace>
     <input type="file" id="file-input-lex" accept=".lexx">
     <input type="file" id="file-input" accept=".txt, .fb2, .epub, .ini, .zip" multiple>
-	<button class="save" id="savebutton">Save to MP3</button>
+	<button class="save" id="savebutton">Descargar como MP3</button>
 	<br>
 	<textarea readonly class="text" id="stat-area"></textarea>
 	<br>
