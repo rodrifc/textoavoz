@@ -1,4 +1,4 @@
-﻿class SocketEdgeTTS {
+class SocketEdgeTTS {
 	constructor(_indexpart, _filename, _filenum,
 				_voice, _pitch, _rate, _volume, _text,
 				_statArea, _obj_threads_info, _save_to_var) {
@@ -58,7 +58,7 @@
 
 	onSocketOpen(event) {
 		this.end_message_received = false
-		this.update_stat("Запущена")
+		this.update_stat("Iniciada")
 		
 		var my_data = this.date_to_string()
 		this.socket.send(
@@ -129,9 +129,9 @@
 	onSocketClose() {
 		if ( !this.mp3_saved ) {
 			if ( this.end_message_received == true ) {
-				this.update_stat("         Обработка")
+				this.update_stat("         Procesando")
 			} else {
-				this.update_stat("Ошибка - ПЕЕЗАПУСК")
+				this.update_stat("Error - REINICIO")
 				let self = this
 				let timerId = setTimeout(function tick() {
 					self.my_uint8Array = new Uint8Array(0)
@@ -140,7 +140,7 @@
 				}, 10000)				
 			}
 		} else {
-			//this.update_stat("Сохранена и Закрыта")
+			//this.update_stat("Guardada y Cerrada")
 		}
 		add_edge_tts(this.save_to_var)
 	}
@@ -318,7 +318,7 @@
 					this.clear()
 				}
 			}
-			this.update_stat("Сохранена")
+			this.update_stat("Guardada")
 			this.obj_threads_info.count += 1
 			const stat_count = this.obj_threads_info.stat.textContent.split(' / ');
 			this.obj_threads_info.stat.textContent = String(Number(stat_count[0]) + 1) + " / " + stat_count[1]
