@@ -58,7 +58,7 @@
 
 	onSocketOpen(event) {
 		this.end_message_received = false
-		this.update_stat("ferozmente")
+		this.update_stat("Запущена")
 		
 		var my_data = this.date_to_string()
 		this.socket.send(
@@ -86,16 +86,16 @@
 			if (data.includes("Path:turn.end")) {
 				this.end_message_received = true
 				//console.log("Path:turn.end ", this.indexpart)
-				//Procesando partes de Blob y luego guardándolo en mp3
+				//Обработка частей Blob с последующим сохранением в mp3
 				for (let _ind = 0; _ind < this.audios.length; _ind++) {
 					const reader_result = await this.audios[_ind].arrayBuffer()
 					const uint8_Array = await new Uint8Array(reader_result)
 					
-					// Buscar todas las posiciones de bytes iguales a "\r\n""
+					// Ищем все позиции байтов, равных "\r\n"
 					let posIndex = this.findIndex(uint8_Array, this.data_separator)
 					const parts = []
 					if (posIndex !== -1) {
-						// Cortar el Blob en pedazos
+						// Разрезаем Blob на части
 						const partBlob = this.audios[_ind].slice(posIndex + this.data_separator.length)
 						parts.push(partBlob)
 
@@ -122,16 +122,16 @@
 	
 	update_stat(msg) {
 		let statlines = this.statArea.value.split('\n');
-		statlines[this.indexpart]= "Ladrando " + (this.indexpart+1).toString().padStart(4, '0') + ": " + msg
+		statlines[this.indexpart]= "Часть " + (this.indexpart+1).toString().padStart(4, '0') + ": " + msg
 		this.statArea.value = statlines.join('\n')
 	}
 
 	onSocketClose() {
 		if ( !this.mp3_saved ) {
 			if ( this.end_message_received == true ) {
-				this.update_stat(" a mi líder")
+				this.update_stat("         Обработка")
 			} else {
-				this.update_stat("a los invitados - ferozmente")
+				this.update_stat("Ошибка - ПЕЕЗАПУСК")
 				let self = this
 				let timerId = setTimeout(function tick() {
 					self.my_uint8Array = new Uint8Array(0)
@@ -140,7 +140,7 @@
 				}, 10000)				
 			}
 		} else {
-			//this.update_stat("fuerte")
+			//this.update_stat("Сохранена и Закрыта")
 		}
 		add_edge_tts(this.save_to_var)
 	}
@@ -148,14 +148,21 @@
 	start_works() {
 		//console.log("Start works...")//console.log(this.my_filename + " " + this.my_filenum + " start works...")
 		if ("WebSocket" in window) {
+			const SEC_MS_GEC_VERSION = "1-130.0.2849.68";
+			const secMsGec = this.generateSecMsGec();
+			
 			this.socket = new WebSocket(
 				"wss://speech.platform.bing.com/consumer/speech/synthesize/" +
 				"readaloud/edge/v1?TrustedClientToken=" +
 				"6A5AA1D4EAFF4E9FB37E23D68491D6F4" +
-				"&ConnectionId=" + this.connect_id())
-			this.socket.addEventListener('open', this.onSocketOpen.bind(this))
-			this.socket.addEventListener('message', this.onSocketMessage.bind(this))
-			this.socket.addEventListener('close', this.onSocketClose.bind(this))
+				"&Sec-MS-GEC=" + secMsGec +
+				"&Sec-MS-GEC-Version=" + SEC_MS_GEC_VERSION +
+				"&ConnectionId=" + this.connect_id()
+			);
+			
+			this.socket.addEventListener('open', this.onSocketOpen.bind(this));
+			this.socket.addEventListener('message', this.onSocketMessage.bind(this));
+			this.socket.addEventListener('close', this.onSocketClose.bind(this));
 		} else {
 			console.log("WebSocket NOT supported by your Browser!");
 		}
@@ -179,33 +186,117 @@
 		return uuid.replace(/-/g, '');
 	}
 	
-async saveFiles(blob) {
-    if (this.start_save == false) {
-        this.start_save = true;
+	
+	sha256(ascii) {
+		function rightRotate(value, amount) {
+			return (value >>> amount) | (value << (32 - amount));
+		}
+		
+		var mathPow = Math.pow;
+		var maxWord = mathPow(2, 32);
+		var lengthProperty = 'length';
+		var i, j;
+		var result = '';
 
-        try {
-            // Prompt the user to select a directory
-            const directoryHandle = await window.showDirectoryPicker();
+		var words = [];
+		var asciiBitLength = ascii[lengthProperty] * 8;
+		
+		var hash = this.sha256.h = this.sha256.h || [];
+		var k = this.sha256.k = this.sha256.k || [];
+		var primeCounter = k[lengthProperty];
 
-            // Create a new folder inside the selected directory
-            const new_folder_handle = await directoryHandle.getDirectoryHandle(this.my_filename, { create: true });
+		var isComposite = {};
+		for (var candidate = 2; primeCounter < 64; candidate++) {
+			if (!isComposite[candidate]) {
+				for (i = 0; i < 313; i += candidate) {
+					isComposite[i] = candidate;
+				}
+				hash[primeCounter] = (mathPow(candidate, .5) * maxWord) | 0;
+				k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+			}
+		}
+		
+		ascii += '\x80';
+		while (ascii[lengthProperty] % 64 - 56) ascii += '\x00';
+		for (i = 0; i < ascii[lengthProperty]; i++) {
+			j = ascii.charCodeAt(i);
+			if (j >> 8) return;
+			words[i >> 2] |= j << ((3 - i) % 4) * 8;
+		}
+		words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
+		words[words[lengthProperty]] = (asciiBitLength);
+		
+		for (j = 0; j < words[lengthProperty];) {
+			var w = words.slice(j, j += 16);
+			var oldHash = hash;
+			hash = hash.slice(0, 8);
+			
+			for (i = 0; i < 64; i++) {
+				var w15 = w[i - 15], w2 = w[i - 2];
 
-            // Create a new file inside the folder
-            const fileHandle = await new_folder_handle.getFileHandle(this.my_filename + " " + this.my_filenum + '.mp3', { create: true });
+				var a = hash[0], e = hash[4];
+				var temp1 = hash[7]
+					+ (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+					+ ((e & hash[5]) ^ ((~e) & hash[6]))
+					+ k[i]
+					+ (w[i] = (i < 16) ? w[i] : (
+							w[i - 16]
+							+ (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+							+ w[i - 7]
+							+ (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+						) | 0
+					);
+				var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+					+ ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+				
+				hash = [(temp1 + temp2) | 0].concat(hash);
+				hash[4] = (hash[4] + temp1) | 0;
+			}
+			
+			for (i = 0; i < 8; i++) {
+				hash[i] = (hash[i] + oldHash[i]) | 0;
+			}
+		}
+		
+		for (i = 0; i < 8; i++) {
+			for (j = 3; j + 1; j--) {
+				var b = (hash[i] >> (j * 8)) & 255;
+				result += ((b < 16) ? 0 : '') + b.toString(16);
+			}
+		}
+		return result;
+	}
 
-            // Write the blob data to the file
-            const writableStream = await fileHandle.createWritable();
-            await writableStream.write(blob);
-            await writableStream.close();
-
-            console.log("File saved successfully!");
-        } catch (error) {
-            console.error("Error saving file:", error);
-        }
-
-        this.clear();
-    }
-}
+	generateSecMsGec() {
+		const WIN_EPOCH = 11644473600;
+		const S_TO_NS = 1e9;
+		const TRUSTED_CLIENT_TOKEN = "6A5AA1D4EAFF4E9FB37E23D68491D6F4";
+		
+		let ticks = Date.now() / 1000;
+		ticks -= 30 + Math.floor(Math.random() * 61);
+		ticks += WIN_EPOCH;
+		ticks -= ticks % 300;
+		ticks *= S_TO_NS / 100;
+		
+		const strToHash = Math.floor(ticks) + TRUSTED_CLIENT_TOKEN;
+		
+		return this.sha256(strToHash).toUpperCase();
+	}
+	
+	
+	
+	async saveFiles(blob) {
+		if (this.start_save == false) {
+			this.start_save = true
+			const new_folder_handle = await save_path_handle.getDirectoryHandle(this.my_filename, { create: true });			
+			const fileHandle = await new_folder_handle.getFileHandle(this.my_filename + " " + this.my_filenum + '.mp3', { create: true });
+			const writableStream = await fileHandle.createWritable();
+			const writable = writableStream.getWriter();
+			await writable.write(blob);
+			await writable.close();
+			this.clear()
+		}
+	}
 	
 	save_mp3() {
 		//console.log("Save_mp3");
@@ -227,7 +318,7 @@ async saveFiles(blob) {
 					this.clear()
 				}
 			}
-			this.update_stat("dejé de ladrar")
+			this.update_stat("Сохранена")
 			this.obj_threads_info.count += 1
 			const stat_count = this.obj_threads_info.stat.textContent.split(' / ');
 			this.obj_threads_info.stat.textContent = String(Number(stat_count[0]) + 1) + " / " + stat_count[1]
