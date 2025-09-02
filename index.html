@@ -10,8 +10,7 @@
 <body>
 	<header style="width: 100%;">
 		<div>
-		  <img src="chesterbanner.jpg" alt="Chester Banner" style="max-width: 100%; width: 600px; display: block; margin: 0 auto 10px;">
-		  <p style="color: rgb(99, 98, 98); font-size: 12px; margin: 0 auto 10px; text-align: center;">Este sintetizador de texto a voz utiliza 
+		   <p style="color: rgb(99, 98, 98); font-size: 12px; margin: 0 auto 10px; text-align: center;">Este sintetizador de texto a voz utiliza 
 			<a href="https://learn.microsoft.com/en-us/azure/ai-services/speech-service/" 
 			   target="_blank" 
 			   rel="noopener" 
@@ -332,105 +331,64 @@
     </optgroup>
     </select>
   </rowspace>
-  <rowspace>
-  <select class="pointsselect" id="pointsselect" name="pointsselect">
-    <option>No reemplazar puntos</option>
-    <option>Reemplazar puntos por ,</option>
-    <option>Reemplazar puntos por ;</option>
-    <option>Reemplazar puntos por :</option>
-    <option>Reemplazar puntos por -</option>
-    <option>Reemplazar con tres líneas</option>
-  </select>
-  <button class="pointstype" id="pointstype" onclick="points_mod()">V1</button>
-  </rowspace>
-
-  <div id="div-rate" class="slidecontainer">
-  <br>
-    <label for="rate">Velocidad <output style="float: right;" id="rate-str">+0%</output></label>
-    <input type="range" min="-50" max="100" value="0" step="0" class="rate" id="rate" list="ratemarks">
-  </div>
-  <div id="div-pitch" class="slidecontainer">
-  <br>
-    <label for="pitch">Tono <output style="float: right;" id="pitch-str">+0Hz</output></label>
-    <input type="range" min="-50" max="50" value="0" step="0" class="pitch" id="pitch">
-  </div>
-  <div id="div-threads" class="slidecontainer">
-  <br>
-    <label for="max-threads">Número de hilos<output style="float: right;" id="max-threads-int">20</output></label>
-    <input type="range" min=1 max=30 value=20 step=1 class="max-threads" id="max-threads">
-  </div>
-  <div id="div-mergefiles" class="slidecontainer">
-  <br>
-    <label for="max-threads">Combinar MP3s cada <output style="float: right;" id="mergefiles-str">50 piezas</output></label>
-    <input type="range" min=1 max=100 value=50 step=1 class="mergefiles" id="mergefiles">
-  </div>
-<label id="dop-settings-label">﹀</label>
-<br>
-  <myspace class="myspace">
-  <button id="file-button-lex">Subir P. LEXX</button>
-  <button id="file-button">Subir Texto</button>
-</myspace>
-  <input type="file" id="file-input-lex" accept=".lexx">
-  <input type="file" id="file-input" accept=".txt, .fb2, .epub, .ini, .zip" multiple>
-<button class="save" id="savebutton">Descargar como MP3</button>
-<br>
-<textarea readonly class="text" id="stat-area"></textarea>
-<br>
-  <label id="stat-label"><output id="stat-info"></output> <output style="float: right;" id="stat-str">0 / 0</output></label>
-</section>
-<!-- Contenedor para las instrucciones -->
-<div style="margin: 20px auto; max-width: 600px; font-size: 14px;">
-	<!-- Texto clickable "Instrucciones" -->
-	<p id="instrucciones-toggle" style="cursor: pointer; text-decoration: underline;">Instrucciones</p>
-  
-	<!-- Contenido desplegable -->
-	<div id="instrucciones-content" style="display: none;">
-	  <p>
-		Este pequeño programa utiliza tecnología de Microsoft para convertir texto escrito en audio grabado con formato MP3. Usted puede seleccionar la voz de sintetización deseada desde el selector superior. La herramienta soporta gran cantidad de idiomas y regionalizaciones. Los dos primeros del listado son los recomendados para Español Argentina.
-	  </p>
-	  <p>
-		Para convertir texto a audio sintetizado usted puede ingresar manualmente texto en el cuadro de texto (que aparece al hacer clic en la tuerca) o puede subir un archivo en formato compatible.
-	  </p>
-	  <p>
-		El sintetizador acepta archivos de formato TXT, FB2 y EPUB. Si usted tiene un archivo Word o PDF puede copiar y pegar los contenidos a un bloc de notas y luego guardar como formato TXT para subir a esta página.
-	  </p>
-	  <p>
-		Tenga en cuenta que si copia y pega de un origen como Word o PDF a un TXT debe revisar los saltos de línea, caracteres que no deben leerse y palabras en otros idiomas, ya que estas incidencias afectan a la capacidad del motor para generar pronunciaciones correctas y/o leer de corrido.
-	  </p>
-	  <p>
-		Si así lo desea puede (opcionalmente) cargar un archivo .LEXX. Los archivos .LEXX son instrucciones especiales para indicar al motor de voz como debe pronunciar términos específicos. El formato LEXX requiere que por cada línea se especifique una palabra entre comillas, seguida de un símbolo igual (=) y luego la pronunciación más aproximada, también entre comillas. Si el sintetizador encuentra en el texto una coincidencia; optará por pronunciarla según su archivo LEXX le indicó. Usted puede crear un archivo LEXX fácilmente utilizando el Bloc de notas de su sistema operativo. Solo respete el formato según se ejemplifica debajo y guarde el archivo. Al guardarlo observe que su programa de bloc de notas intentará guardar el archivo como .txt. Modifique la extensión para que el formato sea .lexx.
-	  </p>
-	  <p>
-		Por ejemplo:
-	  </p>
-	  <pre>
-  "Buenos Aires"="bwe-nos ai-res"
-  "Copilot"="ko-pai-lot"
-  “Microsoft”=”mai-cro-soft”
-	  </pre>
-	</div>
-  </div>
-  
-  <!-- Script para manejar el despliegue -->
-  <script>
-	// Obtener referencias a los elementos
-	const toggleText = document.getElementById('instrucciones-toggle');
-	const content = document.getElementById('instrucciones-content');
-  
-	// Agregar evento de clic
-	toggleText.addEventListener('click', () => {
-	  // Alternar la visibilidad del contenido
-	  if (content.style.display === 'none') {
-		content.style.display = 'block';
-	  } else {
-		content.style.display = 'none';
-	  }
-	});
-  </script>
-<script src="./assets/jszip.min.js"></script>
-<script src="./assets/texts_converter.js"></script>
-<script src="./assets/processing_file.js"></script>
-<script src="./assets/socket_edge_tts.js"></script>
-<script src="./assets/script.js"></script>
+<rowspace>
+      <select class="pointsselect" id="pointsselect" name="pointsselect">
+        <option>No reemplazar puntos</option>
+        <option>Reemplazar puntos por ,</option>
+        <option>Reemplazar puntos por ;</option>
+        <option>Reemplazar puntos por :</option>
+        <option>Reemplazar puntos por -</option>
+        <option>Reemplazar por tres líneas</option>
+      </select>
+      <button class="pointstype" id="pointstype" onclick="points_mod()">V1</button>
+    </rowspace>
+    <div id="div-rate" class="slidecontainer">
+      <br>
+      <label for="rate">Velocidad <output style="float: right;" id="rate-str">+100%</output></label>
+      <input type="range" min="-50" max="100" value="100" step="5" class="rate" id="rate" list="ratemarks">
+    </div>
+    <div id="div-pitch" class="slidecontainer">
+      <br>
+      <label for="pitch">Tonalidad <output style="float: right;" id="pitch-str">+0Hz</output></label>
+      <input type="range" min="-50" max="50" value="0" step="0" class="pitch" id="pitch">
+    </div>
+    <div id="div-threads" class="slidecontainer">
+      <br>
+      <label for="max-threads">Cantidad de hilos <output style="float: right;" id="max-threads-int">20</output></label>
+      <input type="range" min=1 max=30 value=20 step=1 class="max-threads" id="max-threads">
+    </div>
+    <div id="div-mergefiles" class="slidecontainer">
+      <br>
+      <label for="mergefiles">Combinar MP3 por <output style="float: right;" id="mergefiles-str">10 archivos</output></label>
+      <input type="range" min=1 max=100 value=10 step=1 class="mergefiles" id="mergefiles">
+    </div>
+    <div id="div-lexx_register" class="checkbox-wrapper-2">
+      <br>
+      <label for="lexx_register" class="checkbox-label">Considerar mayúsculas/minúsculas del diccionario
+        <input id="lexx_register" type="checkbox" class="sc-gJwTLC ikxBAC" checked>
+      </label>
+    </div>
+    <label id="dop-settings-label">﹀</label>
+    <br>
+    <myspace class="myspace">
+      <label id="left-label"><a href="./RU.lexx" id="is-lexx">Diccionario</a></label>
+      <label id="right-label">Libros</label>
+      <button id="file-button-lex">Subir</button>
+      <button id="file-button">Abrir</button>
+    </myspace>
+    <input type="file" id="file-input-lex" accept=".lexx">
+    <input type="file" id="file-input" accept=".txt, .fb2, .epub, .ini, .zip" multiple>
+    <button class="save" id="savebutton">Guardar como MP3</button>
+    <br>
+    <textarea readonly class="text" id="stat-area"></textarea>
+    <br>
+    <label id="stat-label"><output id="stat-info"></output> <output style="float: right;" id="stat-str">0 / 0</output></label>
+  </section>
+  <script src="./assets/jszip.min.js"></script>
+  <script src="./assets/texts_converter.js"></script>
+  <script src="./assets/processing_file.js"></script>
+  <script src="./assets/socket_edge_tts.js"></script>
+  <script src="./assets/script.js"></script>
 </body>
+
 </html>
