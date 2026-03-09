@@ -1,222 +1,238 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./assets/styles.css">
-  <title>EDGE TTS</title>
+  <title>Convertir texto a voz MP3</title>
   
   <style>
-    .header-container {
-      width: 100%;
+    /* Contenedor principal del encabezado (flexbox) */
+    .title-image-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
-    .header-text {
-      color: rgb(99, 98, 98);
-      font-size: 12px;
-      margin: 0 auto 10px;
-      text-align: center;
+
+    /* Sub-contenedor solo para agrupar título y párrafo juntos */
+    .header-text-group {
+      flex: 1;
+      padding-right: 20px;
     }
-    .header-link {
-      color: rgb(99, 98, 98);
-      text-decoration: none;
-    }
-    .options-desc {
-      font-size: 14px;
-      margin: 0 auto 20px;
+
+    /* Título principal */
+    .header-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #222;
+      margin: 0 0 5px 0;
       text-align: left;
     }
-    .instrucciones-container {
-      margin: 20px auto;
-      max-width: 600px;
-      font-size: 14px;
+
+    /* Párrafo de créditos */
+    .header-credits {
+      line-height: 1.6;
+      text-align: justify;
+      color: #666;
+      font-size: 0.85rem;
+      margin: 0;
     }
-    .instrucciones-summary {
-      cursor: pointer;
-      text-decoration: underline;
-      font-weight: bold;
+
+    /* Logotipo del perro responsivo */
+    .header-logo {
+      max-width: 150px;
+      max-height: 150px;
+      width: auto;
+      height: auto;
+      flex-shrink: 0;
     }
-    .instrucciones-content {
-      margin-top: 10px;
+    
+    /* Pie de página */
+    .footer-container {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
     }
-    .stat-right {
-      float: right;
+    
+    .footer-icon {
+      margin-bottom: 10px;
+    }
+    
+    .footer-text {
+      font-size: 0.85rem;
+      color: #777;
+      margin: 0;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
-  <header class="header-container">
-    <div>
-      <p class="header-text">Este sintetizador de texto a voz utiliza 
-        <a href="https://learn.microsoft.com/en-us/azure/ai-services/speech-service/" 
-           target="_blank" 
-           rel="noopener" 
-           class="header-link">tecnología de texto a voz desarrollada por Microsoft</a>.
-      </p>
-    </div>
-  </header>
-  <br>
   
-  <textarea class="text" id="text-area" placeholder="Puede insertar o tipear texto aquí en lugar de subir un archivo a sintetizar..."></textarea>
-  
-  <section class="options">
-    <p class="options-desc">Toque la tuerca para ingresar texto manualmente. Puede seleccionar una voz diferente desde el menú desplegable.</p>
-    
-    <div class="rowspace">
-      <button class="settingsbutton" id="settingsbutton">⚙</button>
-      <select class="voices" id="voices" name="voices">
-        <optgroup label="Español (Argentina)">
-          <option value="es-AR, ElenaNeural">es-AR, ElenaNeural</option>
-          <option value="es-AR, TomasNeural">es-AR, TomasNeural</option>
-        </optgroup>
-        <optgroup label="Español (Otras variantes)">
-          <option value="es-CL, CatalinaNeural">es-CL, CatalinaNeural</option>
-          <option value="es-CL, LorenzoNeural">es-CL, LorenzoNeural</option>
-          <option value="es-CO, GonzaloNeural">es-CO, GonzaloNeural</option>
-          <option value="es-CO, SalomeNeural">es-CO, SalomeNeural</option>
-          <option value="es-CR, JuanNeural">es-CR, JuanNeural</option>
-          <option value="es-CR, MariaNeural">es-CR, MariaNeural</option>
-          <option value="es-CU, BelkysNeural">es-CU, BelkysNeural</option>
-          <option value="es-CU, ManuelNeural">es-CU, ManuelNeural</option>
-          <option value="es-DO, EmilioNeural">es-DO, EmilioNeural</option>
-          <option value="es-DO, RamonaNeural">es-DO, RamonaNeural</option>
-          <option value="es-EC, AndreaNeural">es-EC, AndreaNeural</option>
-          <option value="es-EC, LuisNeural">es-EC, LuisNeural</option>
-          <option value="es-SV, LorenaNeural">es-SV, LorenaNeural</option>
-          <option value="es-SV, RodrigoNeural">es-SV, RodrigoNeural</option>
-          <option value="es-GQ, JavierNeural">es-GQ, JavierNeural</option>
-          <option value="es-GQ, TeresaNeural">es-GQ, TeresaNeural</option>
-          <option value="es-GT, AndresNeural">es-GT, AndresNeural</option>
-          <option value="es-GT, MartaNeural">es-GT, MartaNeural</option>
-          <option value="es-HN, CarlosNeural">es-HN, CarlosNeural</option>
-          <option value="es-HN, KarlaNeural">es-HN, KarlaNeural</option>
-          <option value="es-MX, DaliaNeural">es-MX, DaliaNeural</option>
-          <option value="es-MX, JorgeNeural">es-MX, JorgeNeural</option>
-          <option value="es-NI, FedericoNeural">es-NI, FedericoNeural</option>
-          <option value="es-NI, YolandaNeural">es-NI, YolandaNeural</option>
-          <option value="es-PA, MargaritaNeural">es-PA, MargaritaNeural</option>
-          <option value="es-PA, RobertoNeural">es-PA, RobertoNeural</option>
-          <option value="es-PY, MarioNeural">es-PY, MarioNeural</option>
-          <option value="es-PY, TaniaNeural">es-PY, TaniaNeural</option>
-          <option value="es-PE, AlexNeural">es-PE, AlexNeural</option>
-          <option value="es-PE, CamilaNeural">es-PE, CamilaNeural</option>
-          <option value="es-PR, KarinaNeural">es-PR, KarinaNeural</option>
-          <option value="es-PR, VictorNeural">es-PR, VictorNeural</option>
-          <option value="es-ES, AlvaroNeural">es-ES, AlvaroNeural</option>
-          <option value="es-ES, ElviraNeural">es-ES, ElviraNeural</option>
-          <option value="es-US, AlonsoNeural">es-US, AlonsoNeural</option>
-          <option value="es-US, PalomaNeural">es-US, PalomaNeural</option>
-          <option value="es-UY, MateoNeural">es-UY, MateoNeural</option>
-          <option value="es-UY, ValentinaNeural">es-UY, ValentinaNeural</option>
-          <option value="es-VE, PaolaNeural">es-VE, PaolaNeural</option>
-          <option value="es-VE, SebastianNeural">es-VE, SebastianNeural</option>
-        </optgroup>
-        <optgroup label="Multilingual">
-          <option value="de-DE, FlorianMultilingualNeural">de-DE, FlorianMultilingualNeural</option>
-          <option value="de-DE, SeraphinaMultilingualNeural">de-DE, SeraphinaMultilingualNeural</option>
-          <option value="en-US, AndrewMultilingualNeural">en-US, AndrewMultilingualNeural</option>
-          <option value="en-US, AvaMultilingualNeural">en-US, AvaMultilingualNeural</option>
-          <option value="en-US, BrianMultilingualNeural">en-US, BrianMultilingualNeural</option>
-          <option value="en-US, EmmaMultilingualNeural">en-US, EmmaMultilingualNeural</option>
-          <option value="fr-FR, RemyMultilingualNeural">fr-FR, RemyMultilingualNeural</option>
-          <option value="fr-FR, VivienneMultilingualNeural">fr-FR, VivienneMultilingualNeural</option>
-          <option value="it-IT, GiuseppeMultilingualNeural">it-IT, GiuseppeMultilingualNeural</option>
-          <option value="ko-KR, HyunsuMultilingualNeural">ko-KR, HyunsuMultilingualNeural</option>
-          <option value="pt-BR, ThalitaMultilingualNeural">pt-BR, ThalitaMultilingualNeural</option>
-        </optgroup>
-        <optgroup label="Inglés">
-          <option value="en-US, AnaNeural">en-US, AnaNeural</option>
-          <option value="en-US, AndrewNeural">en-US, AndrewNeural</option>
-          <option value="en-US, AriaNeural">en-US, AriaNeural</option>
-          <option value="en-US, AvaNeural">en-US, AvaNeural</option>
-          <option value="en-US, BrianNeural">en-US, BrianNeural</option>
-          <option value="en-US, ChristopherNeural">en-US, ChristopherNeural</option>
-          <option value="en-US, EmmaNeural">en-US, EmmaNeural</option>
-          <option value="en-US, EricNeural">en-US, EricNeural</option>
-          <option value="en-US, GuyNeural">en-US, GuyNeural</option>
-          <option value="en-US, JennyNeural">en-US, JennyNeural</option>
-          <option value="en-US, MichelleNeural">en-US, MichelleNeural</option>
-          <option value="en-US, RogerNeural">en-US, RogerNeural</option>
-          <option value="en-US, SteffanNeural">en-US, SteffanNeural</option>
-          <option value="en-GB, LibbyNeural">en-GB, LibbyNeural</option>
-          <option value="en-GB, MaisieNeural">en-GB, MaisieNeural</option>
-          <option value="en-GB, RyanNeural">en-GB, RyanNeural</option>
-          <option value="en-GB, SoniaNeural">en-GB, SoniaNeural</option>
-          <option value="en-GB, ThomasNeural">en-GB, ThomasNeural</option>
-        </optgroup>
-      </select>
-    </div>
-    
-    <div class="rowspace">
-      <select class="pointsselect" id="pointsselect" name="pointsselect">
-        <option>No reemplazar puntos</option>
-        <option>Reemplazar puntos por ,</option>
-        <option>Reemplazar puntos por ;</option>
-        <option>Reemplazar puntos por :</option>
-        <option>Reemplazar puntos por -</option>
-        <option>Reemplazar con tres líneas</option>
-      </select>
-      <button class="pointstype" id="pointstype" onclick="points_mod()">V1</button>
-    </div>
+  <div class="app-container">
+    <header class="header-container">
+      
+      <div class="title-image-container">
+        
+        <div class="header-text-group">
+          <h1 class="header-title">Convertir texto a voz MP3</h1>
+          <p class="header-credits">
+            Herramienta web mantenida por la <a href="https://canas.com.ar/" target="_blank" rel="noopener" class="header-link">Prof. Laura Cañas y el Prof. Rodrigo Cañas</a>. Este sintetizador utiliza <a href="https://learn.microsoft.com/en-us/azure/ai-services/speech-service/" target="_blank" rel="noopener" class="header-link">tecnología de texto a voz desarrollada por Microsoft</a>. Su uso es gratuito y el código fuente del sitio se encuentra <a href="https://github.com/rodrifc/textoavoz" target="_blank" rel="noopener" class="header-link">disponible aquí</a>.
+          </p>
+        </div>
 
-    <div id="div-rate" class="slidecontainer">
-      <br>
-      <label for="rate">Velocidad <output class="stat-right" id="rate-str">+0%</output></label>
-      <input type="range" min="-50" max="100" value="0" step="0" class="rate" id="rate" list="ratemarks">
-    </div>
+        <img src="./assets/dog.png" alt="Icono de perro" class="header-logo">
+      
+      </div>
+    </header>
     
-    <div id="div-pitch" class="slidecontainer">
-      <br>
-      <label for="pitch">Tono <output class="stat-right" id="pitch-str">+0Hz</output></label>
-      <input type="range" min="-50" max="50" value="0" step="0" class="pitch" id="pitch">
-    </div>
-    
-    <div id="div-threads" class="slidecontainer">
-      <br>
-      <label for="max-threads">Número de hilos<output class="stat-right" id="max-threads-int">20</output></label>
-      <input type="range" min=1 max=30 value=20 step=1 class="max-threads" id="max-threads">
-    </div>
-    
-    <div id="div-mergefiles" class="slidecontainer">
-      <br>
-      <label for="max-threads">Combinar MP3s cada <output class="stat-right" id="mergefiles-str">50 piezas</output></label>
-      <input type="range" min=1 max=100 value=50 step=1 class="mergefiles" id="mergefiles">
-    </div>
-    
-    <label id="dop-settings-label">﹀</label>
-    <br>
-    
-    <div class="myspace">
-      <button id="file-button-lex">Subir P. LEXX</button>
-      <button id="file-button">Subir Texto</button>
-    </div>
-    
-    <input type="file" id="file-input-lex" accept=".lexx">
-    <input type="file" id="file-input" accept=".txt, .fb2, .epub, .ini, .zip" multiple>
-    
-    <button class="save" id="savebutton">Descargar como MP3</button>
-    <br>
-    <textarea readonly class="text" id="stat-area"></textarea>
-    <br>
-    <label id="stat-label"><output id="stat-info"></output> <output class="stat-right" id="stat-str">0 / 0</output></label>
-  </section>
+    <details id="edge-warning-box" style="background-color: #ffebee; border: 1px solid #ffcdd2; border-radius: 8px; padding: 15px; margin-bottom: 25px;">
+      <summary id="edge-warning-title" style="font-size: 1.1rem; color: #c62828; cursor: pointer; font-weight: 600;">
+        ⚠️ ATENCIÓN: Se requiere navegador Edge (Clic para más información)
+      </summary>
+      <div style="font-size: 0.95rem; margin-top: 15px; color: #444; text-align: justify;">
+        <p style="margin: 0;">Debido a limitaciones impuestas por Microsoft esta herramienta únicamente funciona con el navegador web Edge. El proceso de conversión fallará si se utiliza otro programa como Chrome o Firefox. En los sistemas Windows 10 y 11 el navegador Edge ya está instalado. Si usás Mac o Linux <a href="https://www.microsoft.com/es-es/edge/download" target="_blank" rel="noopener" style="color: #0078D4; text-decoration: underline;">podés descargarlo haciendo clic aqui</a>.</p>
+      </div>
+    </details>
 
-  <details class="instrucciones-container">
-    <summary class="instrucciones-summary">Instrucciones</summary>
-    <div class="instrucciones-content">
-      <p>Este pequeño programa utiliza tecnología de Microsoft para convertir texto escrito en audio grabado con formato MP3. Usted puede seleccionar la voz de sintetización deseada desde el selector superior. La herramienta soporta gran cantidad de idiomas y regionalizaciones. Los dos primeros del listado son los recomendados para Español Argentina.</p>
-      <p>Para convertir texto a audio sintetizado usted puede ingresar manualmente texto en el cuadro de texto (que aparece al hacer clic en la tuerca) o puede subir un archivo en formato compatible.</p>
-      <p>El sintetizador acepta archivos de formato TXT, FB2 y EPUB. Si usted tiene un archivo Word o PDF puede copiar y pegar los contenidos a un bloc de notas y luego guardar como formato TXT para subir a esta página.</p>
-      <p>Tenga en cuenta que si copia y pega de un origen como Word o PDF a un TXT debe revisar los saltos de línea, caracteres que no deben leerse y palabras en otros idiomas, ya que estas incidencias afectan a la capacidad del motor para generar pronunciaciones correctas y/o leer de corrido.</p>
-      <p>Si así lo desea puede (opcionalmente) cargar un archivo .LEXX. Los archivos .LEXX son instrucciones especiales para indicar al motor de voz como debe pronunciar términos específicos. El formato LEXX requiere que por cada línea se especifique una palabra entre comillas, seguida de un símbolo igual (=) y luego la pronunciación más aproximada, también entre comillas. Si el sintetizador encuentra en el texto una coincidencia; optará por pronunciarla según su archivo LEXX le indicó. Usted puede crear un archivo LEXX fácilmente utilizando el Bloc de notas de su sistema operativo. Solo respete el formato según se ejemplifica debajo y guarde el archivo. Al guardarlo observe que su programa de bloc de notas intentará guardar el archivo como .txt. Modifique la extensión para que el formato sea .lexx.</p>
-      <p>Por ejemplo:</p>
-      <pre>
-  "Buenos Aires"="bwe-nos ai-res"
-  "Copilot"="ko-pai-lot"
-  "Microsoft"="mai-cro-soft"
-      </pre>
-    </div>
-  </details>
+    <details class="instrucciones-container">
+      <summary class="instrucciones-summary">Instrucciones (Clic aquí para más información)</summary>
+      <div class="instrucciones-content">
+        <p style="text-align: justify;">Este programa convierte texto escrito en audio MP3. Siga los pasos en pantalla para elegir el texto y la voz que desee.</p>
+        <p style="text-align: justify;">Puede ingresar texto manualmente o subir un archivo. El sistema acepta archivos <strong>TXT, PDF, Word (.docx), FB2 y EPUB</strong>.</p>
+        <p style="text-align: justify;">Tenga en cuenta que si el documento original (como un PDF) tiene imágenes o formatos complejos, es recomendable revisar que el texto se haya extraído de corrido para que la lectura sea natural.</p>
+        <p style="text-align: justify;"><strong>Cargar Pronunciaciones (.lexx):</strong> Si el motor pronuncia mal alguna sigla o palabra técnica, usted puede cargar un archivo .LEXX con correcciones. Se crea con el Bloc de notas. Por ejemplo:<br>
+          <pre>
+  "COPILOT"="ko-pai-lot"
+  "A.D.N"="a-de-ene"
+          </pre>
+        </p>
+      </div>
+    </details>
+
+    <section class="options" id="main-section">
+      
+      <div class="step-group">
+        <h3 class="step-title">Paso 1: Origen del texto</h3>
+        <p style="margin: 0 0 10px 0; font-size: 0.9rem; color: #666;">Elija si desea subir un archivo o escribir el texto usted mismo:</p>
+        
+        <div class="button-row">
+          <button class="settingsbutton btn-primary" id="settingsbutton">📝 Ingresar texto manualmente</button>
+          <button class="btn-primary" id="file-button">📄 Subir archivo de texto</button>
+        </div>
+        
+        <textarea class="text" id="text-area" placeholder="Escriba o pegue su texto aquí..."></textarea>
+      </div>
+
+      <div class="step-group">
+        <h3 class="step-title">Paso 2: Configuración de Lectura</h3>
+        
+        <label for="voices" style="display: block; margin-bottom: 8px; font-weight: 500;">🗣️ Seleccionar Voz / Idioma:</label>
+        <select class="voices" id="voices" name="voices" style="margin-bottom: 15px;">
+          <optgroup label="Español (Argentina)">
+            <option value="es-AR, ElenaNeural">Elena (Voz Femenina)</option>
+            <option value="es-AR, TomasNeural">Tomas (Voz Masculina)</option>
+          </optgroup>
+          <optgroup label="Español (Otras variantes)">
+            <option value="es-CL, CatalinaNeural">Chile - Catalina</option>
+            <option value="es-CL, LorenzoNeural">Chile - Lorenzo</option>
+            <option value="es-CO, GonzaloNeural">Colombia - Gonzalo</option>
+            <option value="es-CO, SalomeNeural">Colombia - Salome</option>
+            <option value="es-MX, DaliaNeural">México - Dalia</option>
+            <option value="es-MX, JorgeNeural">México - Jorge</option>
+            <option value="es-ES, AlvaroNeural">España - Alvaro</option>
+            <option value="es-ES, ElviraNeural">España - Elvira</option>
+            <option value="es-UY, MateoNeural">Uruguay - Mateo</option>
+            <option value="es-UY, ValentinaNeural">Uruguay - Valentina</option>
+          </optgroup>
+          <optgroup label="Inglés">
+            <option value="en-US, AnaNeural">Estados Unidos - Ana</option>
+            <option value="en-US, GuyNeural">Estados Unidos - Guy</option>
+            <option value="en-GB, LibbyNeural">Reino Unido - Libby</option>
+          </optgroup>
+        </select>
+
+        <label for="rate" style="display: block; margin-top: 10px; font-weight: 500;">⏱️ Velocidad de Lectura <output class="stat-right" id="rate-str">+0%</output></label>
+        <input type="range" min="-50" max="100" value="0" step="0" class="rate" id="rate" list="ratemarks">
+
+        <button id="file-button-lex" class="btn-secondary" style="width: 100%; margin-top: 15px;">⚙️ Cargar Pronunciaciones (.lexx) [Opcional]</button>
+      </div>
+
+      <div class="step-group" style="background-color: transparent; border: none; padding: 0;">
+        <button class="save" id="savebutton">⬇️ Generar y Descargar MP3</button>
+      </div>
+
+      <label id="dop-settings-label">⚙️ Funciones avanzadas (opcional) ﹀</label>
+      
+      <div id="div-pitch" class="step-group">
+        <label style="display: block; margin-bottom: 5px;">Reemplazo de puntuación (Pausas):</label>
+        <div class="button-row" style="margin-bottom: 15px;">
+          <select class="pointsselect" id="pointsselect" name="pointsselect" style="flex: 3;">
+            <option>No reemplazar puntos</option>
+            <option>Reemplazar puntos por ,</option>
+            <option>Reemplazar puntos por ;</option>
+            <option>Reemplazar puntos por :</option>
+            <option>Reemplazar puntos por -</option>
+            <option>Reemplazar con tres líneas</option>
+          </select>
+          <button class="pointstype btn-secondary" id="pointstype" onclick="points_mod()" style="flex: 1;">V1</button>
+        </div>
+
+        <label for="pitch">Tono de Voz <output class="stat-right" id="pitch-str">+0Hz</output></label>
+        <input type="range" min="-50" max="50" value="0" step="0" class="pitch" id="pitch">
+      </div>
+      
+      <div id="div-threads" class="step-group">
+        <label for="max-threads">Número de hilos de procesamiento <output class="stat-right" id="max-threads-int">20</output></label>
+        <input type="range" min=1 max=30 value=20 step=1 class="max-threads" id="max-threads">
+      </div>
+      
+      <div id="div-mergefiles" class="step-group">
+        <label for="mergefiles">Combinar MP3s cada <output class="stat-right" id="mergefiles-str">50 piezas</output></label>
+        <input type="range" min=1 max=100 value=50 step=1 class="mergefiles" id="mergefiles">
+      </div>
+
+      <input type="file" id="file-input-lex" accept=".lexx">
+      <input type="file" id="file-input" accept=".txt, .fb2, .epub, .ini, .zip, .docx, .pdf" multiple>
+      
+      <div class="step-group" style="margin-top: 15px;">
+        <label id="stat-label" style="font-weight: 500;">
+          Estado del proceso: <output id="stat-info" style="color: #0078D4; font-weight: bold; margin-left: 5px;"></output> 
+          <output class="stat-right" id="stat-str">0 / 0</output>
+        </label>
+        <textarea readonly class="text" id="stat-area"></textarea>
+      </div>
+
+    </section>
+    
+    <footer class="footer-container">
+      <div class="footer-icon">
+        <img src="https://flagcdn.com/ar.svg" alt="Bandera de Argentina" style="width: 40px; height: auto; border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); display: block; margin: 0 auto;">
+      </div>
+      <p class="footer-text">Educación pública y gratuita. Sin educación no hay futuro.</p>
+    </footer>
+
+  </div> <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var isEdge = window.navigator.userAgent.indexOf("Edg") > -1;
+      
+      if (isEdge) {
+        var warningBox = document.getElementById("edge-warning-box");
+        var warningTitle = document.getElementById("edge-warning-title");
+        
+        warningBox.style.backgroundColor = "#e8f5e9";
+        warningBox.style.borderColor = "#c8e6c9";
+        warningTitle.style.color = "#2e7d32";
+        warningTitle.innerHTML = "Estás usando el navegador Edge (Clic aqui para más información)";
+      }
+    });
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
   
   <script src="./assets/jszip.min.js"></script>
   <script src="./assets/texts_converter.js"></script>
