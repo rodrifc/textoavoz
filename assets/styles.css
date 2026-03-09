@@ -60,7 +60,7 @@ input {
     width: 100%;
 }
 
-myspace {
+.myspace {
 	display: block;
 	width: 100%;
 }
@@ -76,7 +76,7 @@ button {
     cursor: pointer;
 }
 
-rowspace {
+.rowspace {
     display: flex;
     justify-content: space-between;
 	width: 100%;
