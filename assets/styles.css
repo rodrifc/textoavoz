@@ -3,245 +3,189 @@
 }
 
 body {
-    background-color: #222;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 1.2rem;
+    background-color: #f4f6f8; /* Fondo claro y amable */
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 1rem;
     line-height: 1.5;
-    display: block;
-    min-height: 100vh;
+    margin: 0;
+    padding: 2rem 1rem;
+    color: #333;
+}
+
+/* Contenedor principal centrado */
+.app-container {
+    max-width: 700px;
     margin: 0 auto;
-    padding: 5%;
-    color: #fff;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
-label {
-    color: #bbb;
+.header-text {
+    color: #666;
+    font-size: 0.85rem;
+    text-align: center;
+    margin: 0 0 20px 0;
 }
 
-#pointslabel {
-    margin-top: 0.5rem;
+.header-link {
+    color: #0078D4;
+    text-decoration: none;
 }
 
-.options {
-    display: flex; /* Use flexbox for layout control */
-    flex-direction: column; /* Keep the column layout */
-    max-width: 20rem; /* Maintain the maximum width */
-    margin: 0 auto; /* Center horizontally by setting left and right margins to auto */
-    padding: 1rem; /* Optional: Add padding for spacing inside the panel */
-    box-sizing: border-box; /* Ensure padding and borders are included in the width */
+/* Instrucciones */
+.instrucciones-container {
+    background-color: #e3f2fd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 1px solid #bbdefb;
 }
 
-.optionslite {
+.instrucciones-summary {
+    font-size: 1.1rem;
+    color: #1565c0;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.instrucciones-content {
+    font-size: 0.95rem;
+    margin-top: 15px;
+    color: #444;
+}
+
+/* Grupos visuales (Pasos) */
+.step-group {
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.step-title {
+    font-size: 1.1rem;
+    color: #222;
+    margin: 0 0 15px 0;
+    font-weight: 600;
+}
+
+/* Botones */
+.button-row {
     display: flex;
-    flex-direction: column;
-	max-width: 20rem;
-	margin: 0 auto;
-}
-
-select {
-    background-color: #333;
-    border: 1px solid #444;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    padding: 0.5rem;
-    color: #fff;
-    margin-bottom: 1rem;
-}
-
-option {
-    background-color: #333;
-    color: #fff;
-    padding: 0.5rem;
-	font-size: 1rem;
-}
-
-input {
-    width: 100%;
-}
-
-.myspace {
-	display: block;
-	width: 100%;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 button {
-    background-color: #333;
-    border: 1px solid #444;
-    color: #fff;
     font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    padding: .5rem;
+    font-size: 1rem;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
 }
 
-.rowspace {
-    display: flex;
-    justify-content: space-between;
-	width: 100%;
-    min-width: 20rem;
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.voices, .pointsselect {
-    width: 80%;
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+    flex: 1;
+    min-width: 200px;
 }
 
-#settingsbutton, #pointstype {
-	width: 16%;
-    margin-bottom: 1rem;
+.btn-primary:hover {
+    background-color: #43a047;
 }
 
-#setsavepath {
-	width: 16%;
-    margin-bottom: 1rem;
-    margin-top: .8rem;
+.btn-secondary {
+    background-color: #607d8b;
+    color: white;
 }
 
-#savebutton {
-	width: 100%;
-    margin-bottom: 1rem;
-    margin-top: .8rem;
+.btn-secondary:hover {
+    background-color: #546e7a;
 }
 
-@media screen and (max-width: 1000px) {
-    body {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    textarea {
-        width: 100%;
-        display: block; 
-        margin-top: 20px;
-    }
+.save {
+    background-color: #0078D4;
+    color: white;
+    font-size: 1.2rem;
+    padding: 15px;
+    width: 100%;
+    font-weight: bold;
 }
 
-#file-input-lex {
-  display: none;
+.save:hover {
+    background-color: #0060a8;
 }
 
-#file-input {
-  display: none;
-}
-
-#dop-settings-label {
-    height: 39px;
-    line-height: 39px; 
-	text-align: center;
-	cursor: pointer;
-}
-
-#left-label {
-    padding-bottom: .9rem;
-	text-align: center;
-	width: 48%;
-	display: inline-block;
-}
-
-#right-label {
-    padding-bottom: .9rem;
-	text-align: center;
-	width: 48%;
-	display: inline-block;
-	float: right;
-}
-
-#file-button-lex {
-	width: 48%;
-	display: inline-block;
-}
-
-#file-button {
-	width: 48%;
-	float: right;
-	display: inline-block;
-}
-
-
-#text-area {
-    position: relative;         /* Ensures proper stacking context */
-    z-index: 1001;              /* Places the text area above the overlay */
-    background-color: #333;
-    border: 1px solid #444;
+/* Inputs y Selects */
+select, input[type="range"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #333;
     font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    padding: 1rem;
+    font-size: 1rem;
+}
+
+textarea.text {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #333;
+    font-family: inherit;
+    font-size: 1rem;
     resize: vertical;
-    min-height: 15vh;
-    color: #fff;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    flex-grow: 1;
-    width: 80%;                 /* Adjust width as needed */
-    max-width: 600px;           /* Limits maximum width */
-    margin: auto;               /* Centers the text area horizontally */
+    margin-top: 15px;
 }
 
 #stat-area {
     background-color: #222;
-    border: 0 solid #222;
-	font-family: monospace;
-    font-size: .9rem;
-    line-height: inherit;
-    padding: 1rem;
-    resize: vertical;
-    min-height: 28vh;
-    color: #999;
-    flex-grow: 1;
-    border: none;
-	outline: none;
-    cursor: default;
+    color: #4CAF50;
+    font-family: monospace;
+    font-size: 0.9rem;
+    min-height: 120px;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-  background-color: #222;
+/* Opciones Avanzadas */
+#dop-settings-label {
+    color: #666;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #eee;
+    border-radius: 6px;
+    margin-bottom: 15px;
 }
 
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #333;
+#dop-settings-label:hover {
+    background-color: #e0e0e0;
 }
 
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background-color: #222;
+.stat-right {
+    float: right;
+    color: #0078D4;
+    font-weight: bold;
 }
 
-#text-area::-webkit-scrollbar {
-  width: 10px;
-  background-color: #333;
-}
-
-#text-area::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #222;
-}
-
-#text-area::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background-color: #333;
-}
-
-::-webkit-resizer {
-  display: none;
-  background-color: #222;
-}
-
-#text-area::-webkit-resizer {
-  display: none;
-  background-color: #333;
-}
-
-#is-lexx {
-    color: inherit;
-    text-decoration: none;
-}
-
-.responsive-banner {
-  width: 100%;
-  height: auto;
-  display: block; /* Prevents inline-block spacing issues */
+/* Elementos ocultos */
+input[type="file"] {
+    display: none;
 }
